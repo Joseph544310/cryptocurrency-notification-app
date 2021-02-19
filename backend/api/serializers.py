@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'password', 'posts']
  
     def create(self, validated_data):
-        return CustomUser.objects.create_user(**validated_data)
+        return User.objects.create_user(**validated_data)
  
     def update(self, instance, validated_data):
         instance.email = validated_data.get('email', instance.email)
