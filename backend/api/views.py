@@ -5,9 +5,11 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from .models import User, Alert
 from .serializers import UserSerializer, AlertSerializer
-from django.contrib.auth import login, logout
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 class UserList(ListCreateAPIView):
@@ -49,9 +51,11 @@ class AlertDetail(RetrieveUpdateDestroyAPIView):
 
 
 @require_POST
+@csrf_exempt
 def login_view(request):
-    email = request.body.email
-    password = request.body.password
+    body = json.loads(request.body)
+    email = body.get('email')
+    password = body.get('password')
 
     if email is None or password is None:
         return JsonResponse({'Success': False, 'message': 'Please provide email and password.'}, status=400)
