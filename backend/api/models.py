@@ -45,3 +45,8 @@ class User(AbstractBaseUser):
  
     def get_short_name(self):
         return self.email
+
+
+class Alert(models.Model):
+    title = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
