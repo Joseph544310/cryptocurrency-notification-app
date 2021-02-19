@@ -69,3 +69,10 @@ def logout_view(request):
 
     logout(request)
     return JsonResponse({'Success': True})
+
+
+def user_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'Success': False})
+
+    return JsonResponse({'Success': True, 'user': request.user.email})
