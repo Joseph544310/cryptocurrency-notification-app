@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -22,28 +23,16 @@ class UserManager(BaseUserManager):
         return user
 
  
-class User(AbstractBaseUser):
-    email = models.EmailField(unique=True)
-    is_admin = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
- 
+class User(AbstractUser):
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+
     USERNAME_FIELD = 'email'
- 
+    REQUIRED_FIELDS = []
+
     objects = UserManager()
- 
-    def __unicode__(self):
-        return self.email
- 
-    def has_perm(self, perm, obj=None):
-        return True
- 
-    def has_module_perms(self, app_label):
-        return True
- 
-    def get_full_name(self):
-        return self.email
- 
-    def get_short_name(self):
+
+    def __str__(self):
         return self.email
 
 
