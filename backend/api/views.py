@@ -6,6 +6,8 @@ from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIV
 from .models import User, Alert
 from .serializers import UserSerializer, AlertSerializer
 from django.contrib.auth import login, logout
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 
 
 class UserList(ListCreateAPIView):
