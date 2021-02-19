@@ -40,6 +40,6 @@ class AlertList(ListCreateAPIView):
  
 
 class AlertDetail(RetrieveUpdateDestroyAPIView):
-    queryset = Alert.objects.filter(user=request.user.id)
+    queryset = Alert.objects.all()
     serializer_class = AlertSerializer
     permission_classes = (IsAuthenticated,)
