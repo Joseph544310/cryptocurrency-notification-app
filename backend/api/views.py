@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from .models import User, Alert
 from .serializers import UserSerializer, AlertSerializer
+from django.contrib.auth import login, logout
 
 
 class UserList(ListCreateAPIView):
@@ -43,3 +44,28 @@ class AlertDetail(RetrieveUpdateDestroyAPIView):
     queryset = Alert.objects.all()
     serializer_class = AlertSerializer
     permission_classes = (IsAuthenticated,)
+
+
+@require_POST
+def login_view(request):
+    email = request.body.email
+    password = request.body.password
+
+    if email is None or password is None:
+        return JsonResponse({'Success': False, 'message': 'Please provide email and password.'}, status=400)
+
+    user = authenticate(email=email, password=password)
+
+    if user is None:
+        return JsonResponse({'Success': False, 'message': 'Invalid credentials.'}, status=401)
+
+    login(request, user)
+    return JsonResponse({'success': True})
+
+
+def logout_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'Success': False, 'message': 'You\'re not logged in.'}, status=400)
+
+    logout(request)
+    return JsonResponse({'Success': True})
