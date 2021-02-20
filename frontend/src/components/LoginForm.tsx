@@ -5,7 +5,7 @@ const LoginForm: React.FC = props => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const login = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const login = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         Axios({
             method: 'POST',
@@ -13,8 +13,10 @@ const LoginForm: React.FC = props => {
                 email,
                 password
             },
+            withCredentials: true,
             url: 'http://localhost:8000/api/auth/login'
         }).then(res => console.log(res)).catch(err => console.log(err))
+        
         setEmail('')
         setPassword('')
     }

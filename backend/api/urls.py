@@ -8,5 +8,5 @@ urlpatterns = [
     path('alerts/<str:pk>', AlertDetail.as_view()),
     path('auth/login', login_view),
     path('auth/logout', logout_view),
-    path('auth/user', user_view)
+    path('auth/user', user_view),
 ]
