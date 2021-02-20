@@ -10,6 +10,7 @@ class AlertSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
+    alerts = serializers.StringRelatedField(many=True, read_only=True)
  
     class Meta:
         model = User
