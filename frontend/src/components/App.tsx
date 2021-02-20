@@ -3,13 +3,14 @@ import '../css/App.css';
 import AuthPage from './AuthPage'
 import HomePage from './HomePage'
 import {BrowserRouter, Route} from 'react-router-dom'
+import ProtectedRoute from './ProtectedRoute'
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Route path='/auth' component={AuthPage}/>
-        <Route path='/' exact component={HomePage}/>
+        <ProtectedRoute path='/' exact component={HomePage}/>
       </BrowserRouter>
     </div>
   );
