@@ -4,7 +4,6 @@ import {
     GET_CURRENCIES
 } from './types';
 
-// CHECK TOKEN & LOAD USER
 export const getCurrencies = () => (dispatch:any, getState:any) => {
     Axios({
         method: 'GET',
