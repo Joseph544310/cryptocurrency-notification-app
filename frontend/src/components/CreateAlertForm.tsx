@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {getCurrencies} from '../actions/currencies'
+import {addAlert} from '../actions/alerts'
 
 const CreateAlertForm: React.FC<any> = props => {
     const [currency, setCurrency] = useState('1')
@@ -12,9 +13,14 @@ const CreateAlertForm: React.FC<any> = props => {
         props.getCurrencies()
     }, [])
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        props.addAlert(currency, direction, type, amount)
+    }
+
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <span>Alert me when</span>
                 <select value={currency} onChange={e=>setCurrency(e.target.value)}>
                     {props.currencies.map((currency:any) => 
@@ -49,4 +55,4 @@ const CreateAlertForm: React.FC<any> = props => {
 const mapStateToProps = (state: any) => ({
     currencies: state.currencies.currencies
 })
-export default connect(mapStateToProps, {getCurrencies})(CreateAlertForm)
+export default connect(mapStateToProps, {getCurrencies, addAlert})(CreateAlertForm)

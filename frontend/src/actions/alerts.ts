@@ -46,7 +46,7 @@ export const deleteAlert = (id: string) => (dispatch:any, getState:any) => {
     }).then((res) => {
         dispatch({
         type: DELETE_ALERT,
-        payload: res.data,
+        payload: id,
         });
     }).catch((err) => console.log(err));
 }
