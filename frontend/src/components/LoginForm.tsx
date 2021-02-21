@@ -5,7 +5,7 @@ import {RouteComponentProps, useHistory} from 'react-router-dom'
 interface props extends RouteComponentProps<any> {}
 
 const LoginForm: React.FC<props> = props => {
-    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const history = useHistory()
@@ -15,25 +15,25 @@ const LoginForm: React.FC<props> = props => {
         Axios({
             method: 'POST',
             data: {
-                email,
+                username,
                 password
             },
             withCredentials: true,
             url: 'http://localhost:8000/api/auth/login'
         }).then(res => {
             console.log(res)
-            console.log('login successful, redirecting to home page')
-            history.push('/')
+            // console.log('login successful, redirecting to home page')
+            // history.push('/')
         }).catch(err => console.log(err))
         
-        setEmail('')
+        setUsername('')
         setPassword('')
     }
     
     return (
         <div>
             <form onSubmit={login}>
-                <input type='email' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <input type='text' placeholder='email' value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button>Login</button>
             </form>
