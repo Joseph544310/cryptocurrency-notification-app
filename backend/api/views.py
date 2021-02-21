@@ -47,6 +47,10 @@ class AlertDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = AlertSerializer
     permission_classes = (IsAuthenticated,)
 
+    def get_queryset(self):
+        user = self.request.user
+        return Alert.objects.filter(user=user.id)
+
 
 # Login API
 class LoginAPI(GenericAPIView):
