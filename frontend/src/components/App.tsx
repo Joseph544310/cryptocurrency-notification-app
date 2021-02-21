@@ -6,6 +6,7 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 import store from '../store'
 import {Provider} from 'react-redux'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
