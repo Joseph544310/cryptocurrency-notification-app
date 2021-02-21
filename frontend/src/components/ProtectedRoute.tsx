@@ -7,6 +7,7 @@ const ProtectedRoute = ({component, ...rest}: any)=> {
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(false);
     useEffect( () => {
+        console.log('Protected route checking user')
         Axios({
             method: "GET",
             withCredentials: true,
@@ -32,6 +33,7 @@ const ProtectedRoute = ({component, ...rest}: any)=> {
                 return <RouteComponent {...props} user={user}/>
             }
             else {
+                console.log('not authenticated... redirecting to login')
                 return <Redirect to={ {
                     pathname: '/auth',
                     state: {

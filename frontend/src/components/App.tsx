@@ -9,8 +9,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Route path='/auth' component={AuthPage}/>
         <ProtectedRoute path='/' exact component={HomePage}/>
+        <Route path='/auth' exact component={AuthPage}/>
       </BrowserRouter>
     </div>
   );
