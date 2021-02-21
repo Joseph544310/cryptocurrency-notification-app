@@ -7,10 +7,6 @@ from .models import Alert
 from .serializers import UserSerializer, AlertSerializer, LoginSerializer
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.views.decorators.http import require_POST
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
 from rest_framework.authtoken.models import Token
 
 
