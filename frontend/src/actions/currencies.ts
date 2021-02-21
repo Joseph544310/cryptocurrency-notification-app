@@ -8,7 +8,7 @@ import {
 export const getCurrencies = () => (dispatch:any, getState:any) => {
     Axios({
         method: 'GET',
-        url: 'http://localhost:8000/api/currencies',
+        url: 'http://localhost:8000/api/currencies/',
         withCredentials:true
     }).then((res) => {
         dispatch({

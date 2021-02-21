@@ -11,7 +11,7 @@ export default function (state = initialState, action: any) {
         case GET_CURRENCIES:
             return {
                 ...state,
-                currencies: [...state.currencies]
+                currencies: [...action.payload]
             };
         default:
             return state;
