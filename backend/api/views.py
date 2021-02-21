@@ -2,15 +2,16 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
 from .models import Alert
-from .serializers import UserSerializer, AlertSerializer
+from .serializers import UserSerializer, AlertSerializer, LoginSerializer
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from rest_framework.authtoken.models import Token
 
 
 class UserList(ListCreateAPIView):
@@ -51,35 +52,50 @@ class AlertDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-@require_POST
-@csrf_exempt
-def login_view(request):
-    body = json.loads(request.body)
-    email = body.get('email')
-    password = body.get('password')
+# Login API
+class LoginAPI(GenericAPIView):
+  serializer_class = LoginSerializer
 
-    if email is None or password is None:
-        return JsonResponse({'Success': False, 'message': 'Please provide email and password.'}, status=400)
-
-    user = authenticate(email=email, password=password)
-
-    if user is None:
-        return JsonResponse({'Success': False, 'message': 'Invalid credentials.'}, status=401)
-
-    login(request, user)
-    return JsonResponse({'success': True})
+  def post(self, request, *args, **kwargs):
+    serializer = self.get_serializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    user = serializer.validated_data
+    token = Token.objects.create(user=user)
+    return Response({
+      "user": UserSerializer(user, context=self.get_serializer_context()).data,
+      "token": token
+    })
 
 
-def logout_view(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({'Success': False, 'message': 'You\'re not logged in.'}, status=400)
+# @require_POST
+# @csrf_exempt
+# def login_view(request):
+#     body = json.loads(request.body)
+#     email = body.get('email')
+#     password = body.get('password')
 
-    logout(request)
-    return JsonResponse({'Success': True})
+#     if email is None or password is None:
+#         return JsonResponse({'Success': False, 'message': 'Please provide email and password.'}, status=400)
+
+#     user = authenticate(email=email, password=password)
+
+#     if user is None:
+#         return JsonResponse({'Success': False, 'message': 'Invalid credentials.'}, status=401)
+
+#     login(request, user)
+#     return JsonResponse({'success': True})
 
 
-def user_view(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({'Success': False})
+# def logout_view(request):
+#     if not request.user.is_authenticated:
+#         return JsonResponse({'Success': False, 'message': 'You\'re not logged in.'}, status=400)
 
-    return JsonResponse({'Success': True, 'user': request.user.email})
+#     logout(request)
+#     return JsonResponse({'Success': True})
+
+
+# def user_view(request):
+#     if not request.user.is_authenticated:
+#         return JsonResponse({'Success': False})
+
+#     return JsonResponse({'Success': True, 'user': request.user.email})
