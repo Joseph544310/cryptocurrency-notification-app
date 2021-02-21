@@ -3,8 +3,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
-from .models import Alert
-from .serializers import UserSerializer, AlertSerializer, LoginSerializer
+from .models import Alert, Currency
+from .serializers import UserSerializer, AlertSerializer, LoginSerializer, CurrencySerializer
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
@@ -52,6 +52,12 @@ class AlertDetail(RetrieveUpdateDestroyAPIView):
         return Alert.objects.filter(user=user.id)
 
 
+class CurrencyList(ListAPIView):
+    queryset = Currency.objects.all()
+    serializer_class = CurrencySerializer
+    permission_classes = (AllowAny,)
+
+    
 # Login API
 class LoginAPI(GenericAPIView):
     serializer_class = LoginSerializer

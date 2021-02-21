@@ -8,4 +8,5 @@ urlpatterns = [
     path('alerts/<str:pk>', AlertDetail.as_view()),
     path('auth/login', LoginAPI.as_view()),
     path('auth/logout', LogoutAPI.as_view()),
+    path('currencies/', CurrencyList.as_view())
 ]
