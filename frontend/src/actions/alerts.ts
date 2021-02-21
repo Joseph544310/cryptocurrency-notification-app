@@ -10,7 +10,8 @@ export const getAlerts = () => (dispatch:any, getState:any) => {
     Axios({
         method: 'GET',
         url: 'http://localhost:8000/api/alerts/',
-        withCredentials:true
+        withCredentials:true,
+        headers: setHeaders(getState)
     }).then((res) => {
         dispatch({
         type: GET_ALERTS,
@@ -29,7 +30,8 @@ export const addAlert = (currency: string, direction: string, type: string, amou
             direction,
             type,
             amount
-        }
+        },
+        headers: setHeaders(getState)
     }).then((res) => {
         dispatch({
         type: ADD_ALERT,
@@ -43,6 +45,7 @@ export const deleteAlert = (id: string) => (dispatch:any, getState:any) => {
         method: 'DELETE',
         url: `http://localhost:8000/api/alerts/${id}`,
         withCredentials:true,
+        headers: setHeaders(getState)
     }).then((res) => {
         dispatch({
         type: DELETE_ALERT,
@@ -50,3 +53,21 @@ export const deleteAlert = (id: string) => (dispatch:any, getState:any) => {
         });
     }).catch((err) => console.log(err));
 }
+
+export const setHeaders = (getState: any) => {
+    // Get token from state
+    const token = getState().auth.token;
+
+    // Headers
+    const headers= {
+        'Content-Type': 'application/json',
+        'Authorization': ''
+    };
+
+    // If token, add to headers config
+    if (token) {
+    headers['Authorization'] = `Token ${token}`;
+    }
+
+    return headers;
+};
