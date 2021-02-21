@@ -1,23 +1,16 @@
 import React, {useState} from 'react'
-import Axios from 'axios'
+import {connect} from 'react-redux'
+import {register} from '../actions/auth'
 
-const RegisterForm: React.FC = props => {
+const RegisterForm: React.FC<any> = props => {
+    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confimPassword, setConfirmPassword] = useState('')
 
     const register = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        Axios({
-            method: 'POST',
-            data: {
-                email,
-                password
-            },
-            withCredentials: true,
-            url: 'http://localhost:8000/api/users/'
-        }).then(res => console.log(res)).catch(err => console.log(err))
-        
+        props.register(username, password, email)
         setEmail('')
         setPassword('')
         setConfirmPassword('')
@@ -26,6 +19,7 @@ const RegisterForm: React.FC = props => {
     return (
         <div>
             <form onSubmit={register}>
+                <input type='text' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <input type='email' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <input type='password' placeholder='confirm password' value={confimPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
@@ -36,4 +30,4 @@ const RegisterForm: React.FC = props => {
     )
 }
 
-export default RegisterForm
+export default connect(null, {register})(RegisterForm)

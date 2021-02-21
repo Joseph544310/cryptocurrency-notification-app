@@ -1,31 +1,14 @@
 import React, {useState} from 'react'
-import Axios from 'axios'
-import {RouteComponentProps, useHistory} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {login} from '../actions/auth'
  
-interface props extends RouteComponentProps<any> {}
-
-const LoginForm: React.FC<props> = props => {
+const LoginForm: React.FC<any> = props => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const history = useHistory()
-
     const login = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        Axios({
-            method: 'POST',
-            data: {
-                username,
-                password
-            },
-            withCredentials: true,
-            url: 'http://localhost:8000/api/auth/login'
-        }).then(res => {
-            console.log(res)
-            // console.log('login successful, redirecting to home page')
-            // history.push('/')
-        }).catch(err => console.log(err))
-        
+        props.login(username, password)
         setUsername('')
         setPassword('')
     }
@@ -41,4 +24,4 @@ const LoginForm: React.FC<props> = props => {
     )
 }
 
-export default LoginForm
+export default connect(null, {login})(LoginForm)

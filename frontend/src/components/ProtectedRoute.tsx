@@ -14,7 +14,7 @@ const ProtectedRoute = ({component, auth, ...rest}: any)=> {
             <p>Loading...</p>
         }
         else {
-            if (auth.user) {
+            if (auth.isAuthenticated) {
                 return <RouteComponent {...props}/>
             }
             else {
