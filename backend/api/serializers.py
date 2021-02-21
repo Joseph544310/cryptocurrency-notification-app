@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Alert, User
+from django.contrib.auth.models import User
+from .models import Alert
 
 
 class AlertSerializer(serializers.ModelSerializer):
@@ -14,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'alerts']
+        fields = ['id', 'username', 'email', 'password', 'alerts']
  
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
