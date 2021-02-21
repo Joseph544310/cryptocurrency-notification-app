@@ -7,7 +7,7 @@ from .models import Alert
 class AlertSerializer(serializers.ModelSerializer):
     class Meta:
         model = Alert
-        fields = ['title']
+        fields = ['id', 'currency', 'direction', 'type', 'amount']
 
 
 class UserSerializer(serializers.ModelSerializer):
