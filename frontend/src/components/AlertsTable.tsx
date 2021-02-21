@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
-import {ListGroup} from 'react-bootstrap'
+import {ListGroup, Button} from 'react-bootstrap'
 import {connect} from 'react-redux'
-import {getAlerts} from '../actions/alerts'
+import {getAlerts, deleteAlert} from '../actions/alerts'
 
 const AlertsTable: React.FC<any> = props => {
     useEffect(() => {
@@ -30,6 +30,7 @@ const AlertsTable: React.FC<any> = props => {
                 {props.alerts.map((alert:any) => 
                 <ListGroup.Item>
                 Alert me when {getCurrency(alert.currency)} goes {getDirection(alert.direction, alert.type)} {alert.amount} {alert.type==='FIXED'?'USD':'%'}
+                <Button onClick={e=>props.deleteAlert(alert.id)}>Delete</Button>
                 </ListGroup.Item>
                 )}
                 
@@ -43,4 +44,4 @@ const mapStateToProps = (state: any) => ({
     currencies: state.currencies.currencies
 })
 
-export default connect(mapStateToProps, {getAlerts})(AlertsTable)
+export default connect(mapStateToProps, {getAlerts, deleteAlert})(AlertsTable)
