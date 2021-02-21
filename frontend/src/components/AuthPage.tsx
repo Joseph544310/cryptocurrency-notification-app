@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-import {RouteComponentProps} from 'react-router-dom'
- 
-interface props extends RouteComponentProps<any> {}
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router'
 
-const AuthPage:React.FC<props> = (props) => {
+const AuthPage:React.FC<any> = (props) => {
     const [page, setPage] = useState<'login'|'register'>('login')
+
     return (
         <div>
+            {props.auth.isAuthenticated? <Redirect to='/'/> : null}
             {page==='login'?
             <div>
-                <LoginForm {...props}/>
+                <LoginForm/>
                 <a href='#register' onClick={e=>setPage('register')}>Not registered yet? Click Here!</a>
             </div>
             :
@@ -23,4 +24,7 @@ const AuthPage:React.FC<props> = (props) => {
     )
 }
 
-export default AuthPage
+const mapStateToProps = (state:any) => ({
+    auth: state.auth
+})
+export default connect(mapStateToProps)(AuthPage)

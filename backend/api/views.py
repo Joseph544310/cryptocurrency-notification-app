@@ -54,17 +54,22 @@ class AlertDetail(RetrieveUpdateDestroyAPIView):
 
 # Login API
 class LoginAPI(GenericAPIView):
-  serializer_class = LoginSerializer
+    serializer_class = LoginSerializer
 
-  def post(self, request, *args, **kwargs):
-    serializer = self.get_serializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    user = serializer.validated_data
-    token = Token.objects.create(user=user)
-    return Response({
-      "user": UserSerializer(user, context=self.get_serializer_context()).data,
-      "token": token.key
-    })
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+        token = Token.objects.create(user=user)
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": token.key
+        })
+
+class LogoutAPI(APIView):
+    def get(self, request, format=None):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 # @require_POST

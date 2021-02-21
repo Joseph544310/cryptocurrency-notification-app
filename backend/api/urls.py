@@ -7,4 +7,5 @@ urlpatterns = [
     path('alerts/', AlertList.as_view()),
     path('alerts/<str:pk>', AlertDetail.as_view()),
     path('auth/login', LoginAPI.as_view()),
+    path('auth/logout', LogoutAPI.as_view()),
 ]
