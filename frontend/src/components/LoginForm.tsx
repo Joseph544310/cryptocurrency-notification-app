@@ -16,7 +16,7 @@ const LoginForm: React.FC<any> = props => {
     return (
         <div>
             <form onSubmit={login}>
-                <input type='text' placeholder='email' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                <input type='text' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button>Login</button>
             </form>
