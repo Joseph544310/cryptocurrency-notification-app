@@ -15,7 +15,7 @@ const UserNav:React.FC<any> = (props) => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
                 <Nav.Link as={Link} to='/'>Home</Nav.Link>
-                <Nav.Link as={Link} to='/account'>Account</Nav.Link>
+                {/* <Nav.Link as={Link} to='/account'>Account</Nav.Link> */}
             </Nav>
             <Nav className="ml-auto">
                 <NavLink>{props.auth.user?props.auth.user.username:null}</NavLink>             
