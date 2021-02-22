@@ -38,7 +38,7 @@ const CreateAlertForm: React.FC<any> = props => {
                     <option value='UP'>{type==='PERCENTAGE'?'Up By':'Above'}</option>
                     <option value='DOWN'>{type==='PERCENTAGE'?'Down By':'Below'}</option>
                 </select>
-                <input type='number' placeholder='amount' value={amount} onChange={e=>setAmount(Number(e.target.value))}/>
+                <input type='number' placeholder='amount' value={Number(amount).toString()} onChange={e=>setAmount(Number(e.target.value))}/>
                 <select
                 value={type}
                 onChange={e=>{
