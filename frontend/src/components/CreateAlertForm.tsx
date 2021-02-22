@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {getCurrencies} from '../actions/currencies'
 import {addAlert} from '../actions/alerts'
+import '../css/CreateAlertForm.css'
 
 const CreateAlertForm: React.FC<any> = props => {
     const [currency, setCurrency] = useState('1')
@@ -19,15 +20,15 @@ const CreateAlertForm: React.FC<any> = props => {
     }
 
     return (
-        <div>
+        <div className='CreateAlertForm'>
             <form onSubmit={handleSubmit}>
-                <span>Alert me when</span>
+                <span>Alert me when
                 <select value={currency} onChange={e=>setCurrency(e.target.value)}>
                     {props.currencies.map((currency:any) => 
                         <option key={currency.id} value={currency.id}>{currency.name}</option>
                     )}                   
                 </select>
-                <span>goes</span>
+                goes
                 <select
                 value={direction}
                 onChange={e=>{
@@ -47,7 +48,8 @@ const CreateAlertForm: React.FC<any> = props => {
                     <option value='PERCENTAGE'>%</option>
                     <option value='FIXED'>USD</option>
                 </select>
-                <button>Create Alert</button>
+                </span>
+                <button className='btn btn-success'>Create Alert</button>
             </form>
         </div>
     )

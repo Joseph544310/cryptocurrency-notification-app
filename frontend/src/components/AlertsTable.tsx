@@ -2,15 +2,20 @@ import React, {useEffect} from 'react'
 import {ListGroup, Button} from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {getAlerts, deleteAlert} from '../actions/alerts'
+import {getCurrencies} from '../actions/currencies'
+import {FaTrash} from 'react-icons/fa'
+import '../css/AlertsTable.css'
 
 const AlertsTable: React.FC<any> = props => {
     useEffect(() => {
         props.getAlerts()
+        props.getCurrencies()
     }, [])
 
     const getCurrency = (id: string) => {
         const currency = props.currencies.find((currency:any) => currency.id === id)
-        return currency.name
+        if (currency) return currency.name
+        else return ''
     }
 
     const getDirection = (direction: string, type: string) => {
@@ -28,9 +33,9 @@ const AlertsTable: React.FC<any> = props => {
         <div>
             <ListGroup>
                 {props.alerts.map((alert:any) => 
-                <ListGroup.Item>
+                <ListGroup.Item key={alert.id}>
                 Alert me when {getCurrency(alert.currency)} goes {getDirection(alert.direction, alert.type)} {alert.amount} {alert.type==='FIXED'?'USD':'%'}
-                <Button onClick={e=>props.deleteAlert(alert.id)}>Delete</Button>
+                <span className='trash'><FaTrash onClick={e=>props.deleteAlert(alert.id)}/></span>
                 </ListGroup.Item>
                 )}
                 
@@ -44,4 +49,4 @@ const mapStateToProps = (state: any) => ({
     currencies: state.currencies.currencies
 })
 
-export default connect(mapStateToProps, {getAlerts, deleteAlert})(AlertsTable)
+export default connect(mapStateToProps, {getAlerts, deleteAlert, getCurrencies})(AlertsTable)
