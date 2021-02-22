@@ -48,6 +48,7 @@ const CreateAlertForm: React.FC<any> = props => {
                     <option value='PERCENTAGE'>%</option>
                     <option value='FIXED'>USD</option>
                 </select>
+                {type==='PERCENTAGE'? ' in one day': null}
                 </span>
                 <button className='btn btn-success'>Create Alert</button>
             </form>
