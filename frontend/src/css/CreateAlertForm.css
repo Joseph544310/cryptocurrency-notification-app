@@ -1,9 +1,10 @@
 .CreateAlertForm {
     font-weight: bold;
     animation: slide-up 0.8s ease;
+    background-color: rgba(255,255,255,0.6);
 }
 
-input, select {
+.CreateAlertForm input, select {
     margin: 4px !important;
 }
 

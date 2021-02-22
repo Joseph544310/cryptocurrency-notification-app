@@ -1,3 +1,7 @@
-/* a {
+.AuthPage {
+    margin-top: 15rem;
+}
+
+.AuthPage a {
     color :white !important;
-} */
+}
