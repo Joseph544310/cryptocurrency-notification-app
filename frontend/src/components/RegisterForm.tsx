@@ -11,6 +11,7 @@ const RegisterForm: React.FC<any> = props => {
     const register = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
         props.register(username, password, email)
+        setUsername('')
         setEmail('')
         setPassword('')
         setConfirmPassword('')

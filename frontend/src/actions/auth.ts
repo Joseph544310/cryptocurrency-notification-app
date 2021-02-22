@@ -66,10 +66,23 @@ export const register = (username: string, password: string, email:string) => (d
         url: 'http://localhost:8000/api/users/'
     })
     .then((res) => {
-        dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
-        });
+        Axios({
+            method:'POST',
+            url: 'http://localhost:8000/api/auth/login',
+            data: {
+                username,
+                password
+            },
+            headers: {
+            'Content-Type': 'application/json',
+            }
+        }).then((res) => {
+            dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data,
+            });
+        })
+        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 };

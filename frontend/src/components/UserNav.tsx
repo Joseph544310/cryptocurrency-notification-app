@@ -18,7 +18,7 @@ const UserNav:React.FC<any> = (props) => {
                 <Nav.Link as={Link} to='/account'>Account</Nav.Link>
             </Nav>
             <Nav className="ml-auto">
-                <NavLink>{props.auth.user.username}</NavLink>             
+                <NavLink>{props.auth.user?props.auth.user.username:null}</NavLink>             
                 <Button variant="danger" onClick={() => props.logout()}>Logout</Button>
             </Nav>
           </Navbar.Collapse>
