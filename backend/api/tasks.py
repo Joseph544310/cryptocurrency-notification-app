@@ -3,7 +3,10 @@ from datetime import datetime, timedelta
 from .models import Alert, Currency
 from django.conf import settings
 from django.core.mail import send_mail
+from celery.task.schedules import crontab
+from celery.decorators import periodic_task
 
+@periodic_task(run_every=(crontab(day='*/1')), name="send_notifications", ignore_result=True)
 def task():
     # Mail
     subject = 'Notification regarding cryptocurrency exchange rate'
@@ -33,19 +36,18 @@ def task():
         if (type == 'FIXED'):
             if (alert.direction == 'DOWN' and price_today < alert.amount):
                 message = 'Hello {}, this is to notify you that {} price is below {} USD'.format(alert.user, alert.currency.name, alert.amount))
-                send_mail(subject, message, from_email, [alert.user.email, fail_silently=True])
+                send_mail(subject, message, from_email, [alert.user.email], fail_silently=True])
             
             if (alert.direction == 'UP' and price_today > alert.amount):
                 message = 'Hello {}, this is to notify you that {} price is above {} USD'.format(alert.user, alert.currency.name, alert.amount))
-                send_mail(subject, message, from_email, [alert.user.email, fail_silently=True])
+                send_mail(subject, message, from_email, [alert.user.email], fail_silently=True])
             
-
         if (type == 'PERCENTAGE'):
             if (alert.direction == 'DOWN' and percentage_change <= -alert.amount):
                 message = 'Hello {}, this is to notify you that {} price got down by {} %'.format(alert.user, alert.currency.name, alert.amount))
-                send_mail(subject, message, from_email, [alert.user.email, fail_silently=True])
+                send_mail(subject, message, from_email, [alert.user.email], fail_silently=True])
             
             if (alert.direction == 'UP' and percentage_change >= alert.amount):
                 message = 'Hello {}, this is to notify you that {} price got up by {} %'.format(alert.user, alert.currency.name, alert.amount))
-                send_mail(subject, message, from_email, [alert.user.email, fail_silently=True])
+                send_mail(subject, message, from_email, [alert.user.email], fail_silently=True])
             
