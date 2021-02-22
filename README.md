@@ -12,10 +12,11 @@
 ** To access admin page you can use the super user admin/1234 **
 
 # Third-party tools used:
-1-react-bootstrap for styled components like table and jumbotron<br />
-2-redux for state management in react <br />
-3-djangorestframework for serializers and APIView and Token Authentication<br />
-4-celery and django-celery-beat for periodic task<br />
+1-react-bootstrap for styled components like List and Navbar<br />
+2-react-icons for plus-icon and trash-icon<br />
+3-redux for state management in react <br />
+4-djangorestframework for serializers and APIView and Token Authentication<br />
+5-celery and django-celery-beat for periodic task<br />
 
 ## How To Activate notifications:
 1- Make sure there is a redis server running at port 6379
