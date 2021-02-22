@@ -15,7 +15,7 @@ def task():
 
     for currency in Currency.objects.all():
 
-        price_today = requests.get('https://rest.coinapi.io/v1/exchangerate/{}}/USD'.format(currency.code), headers=headers).json()['rate']
+        price_today = requests.get('https://rest.coinapi.io/v1/exchangerate/{}/USD'.format(currency.code), headers=headers).json()['rate']
         yesterday = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d') + 'T00:00:00'
         price_yesterday = requests.get('https://rest.coinapi.io/v1/exchangerate/{}/USD?time={}'.format(currency.code, yesterday), headers=headers).json()['rate']
 
