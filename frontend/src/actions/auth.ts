@@ -9,6 +9,7 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     CLEAR_ALERTS,
+    SET_ERROR
 } from './types';
 
 // CHECK TOKEN & LOAD USER
@@ -47,7 +48,12 @@ export const login = (username:string, password:string) => (dispatch: any) => {
         payload: res.data,
         });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        dispatch({
+            type: SET_ERROR,
+            payload: 'Wrong Credentials'
+        })
+    });
 };
 
 // REGISTER USER
@@ -84,7 +90,12 @@ export const register = (username: string, password: string, email:string) => (d
         })
         .catch((err) => console.log(err));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+        dispatch({
+            type: SET_ERROR,
+            payload: 'Username or Email already taken'
+        })
+    });
 };
 
 // LOGOUT USER
@@ -120,4 +131,11 @@ export const setHeaders = (getState: any) => {
     }
 
     return headers;
+};
+
+export const resetError = () => (dispatch: any) => {
+    dispatch({
+        type: SET_ERROR,
+        payload: ''
+    })
 };

@@ -6,6 +6,7 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
+    SET_ERROR
 } from '../actions/types';
   
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
     isAuthenticated: null,
     isLoading: false,
     user: null,
+    error: ''
 };
 
 export default function (state = initialState, action: any) {
@@ -48,6 +50,11 @@ export default function (state = initialState, action: any) {
                 isAuthenticated: false,
                 isLoading: false,
             };
+        case SET_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            }
         default:
             return state;
     }
