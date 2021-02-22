@@ -15,10 +15,10 @@ const LoginForm: React.FC<any> = props => {
     
     return (
         <div>
-            <form onSubmit={login}>
+            <form className='form-style' onSubmit={login}>
                 <input type='text' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <button>Login</button>
+                <button className='btn btn-primary'>Login</button>
             </form>
         </div>
     )

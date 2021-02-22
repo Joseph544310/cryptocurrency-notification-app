@@ -18,13 +18,13 @@ const RegisterForm: React.FC<any> = props => {
     
     return (
         <div>
-            <form onSubmit={register}>
+            <form className='form-style' onSubmit={register}>
                 <input type='text' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <input type='email' placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                 <input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <input type='password' placeholder='confirm password' value={confimPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
                 {password!==confimPassword?<p>Passwords do not match</p>: null}
-                <button disabled={!password || password!==confimPassword}>Login</button>
+                <button className='btn btn-primary' disabled={!password || !username || !email || password!==confimPassword}>Register</button>
             </form>
         </div>
     )
