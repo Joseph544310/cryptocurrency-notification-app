@@ -19,6 +19,6 @@
 5-celery and django-celery-beat for periodic task<br />
 
 ## How To Activate notifications:
-1- Make sure there is a redis server running at port 6379
-2- Open a terminal in backend directory and run celery -A backend worker -l INFO
-3- Open another terminal in backend directory and run celery -A backend beat -l INFO
+1- Make sure there is a redis server running at port 6379<br />
+2- Open a terminal in backend directory and run celery -A backend worker -l INFO<br />
+3- Open another terminal in backend directory and run celery -A backend beat -l INFO<br />
