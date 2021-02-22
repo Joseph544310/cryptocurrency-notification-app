@@ -65,7 +65,7 @@ class LoginAPI(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        if (Token.objects.filter(user=user).exist()):
+        if (Token.objects.filter(user=user)):
             token = Token.objects.get(user=user)
         else:
             token = Token.objects.create(user=user)
