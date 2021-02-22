@@ -143,4 +143,12 @@ CORS_EXPOSE_HEADERS = ['Content-Type']
 CORS_ALLOW_CREDENTIALS = True
 
 # API KEY
-X-CoinAPI-Key = os.environ.get('X-CoinAPI-Key')
+X_CoinAPI_Key = os.environ.get('X-CoinAPI-Key')
+
+# MAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')

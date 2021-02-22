@@ -2,10 +2,15 @@ import requests
 from datetime import datetime, timedelta
 from .models import Alert, Currency
 from django.conf import settings
+from django.core.mail import send_mail
 
 def task():
-    headers = {'X-CoinAPI-Key': settings.X-CoinAPI-Key}
+    # Mail
+    subject = 'Notification regarding cryptocurrency exchange rate'
+    from_email = settings.EMAIL_HOST_USER
+    headers = {'X-CoinAPI-Key': settings.X_CoinAPI_Key}
 
+    # API Data
     prices = {}
 
     for currency in Currency.objects.all():
@@ -18,28 +23,29 @@ def task():
             'today': price_today,
             'yesterday': price_yesterday
         }
-        # print(price_today)
-        # print(price_yesterday)
-        # print(percentage_change)
 
-
+    # Checking to see who should be sent a notification
     for alert in Alert.objects.all():
         price_today = prices[alert.currency.code]['today']
         price_yesterday = prices[alert.currency.code]['yesterday']
         percentage_change = ((price_today - price_yesterday)/price_yesterday) * 100 
 
         if (type == 'FIXED'):
-            if (alert.direction == 'DOWN' and price_today<alert.amount):
-                print('send mail to {} because price is below {} USD'.format(alert.user, alert.amount))
+            if (alert.direction == 'DOWN' and price_today < alert.amount):
+                message = 'Hello {}, this is to notify you that {} price is below {} USD'.format(alert.user, alert.currency.name, alert.amount))
+                send_mail(subject, message, from_email, [alert.user.email, fail_silently=True])
             
-            if (alert.direction == 'UP' and price_today>alert.amount):
-                print('send mail to {} because price is above {} USD'.format(alert.user, alert.amount))
+            if (alert.direction == 'UP' and price_today > alert.amount):
+                message = 'Hello {}, this is to notify you that {} price is above {} USD'.format(alert.user, alert.currency.name, alert.amount))
+                send_mail(subject, message, from_email, [alert.user.email, fail_silently=True])
             
 
         if (type == 'PERCENTAGE'):
             if (alert.direction == 'DOWN' and percentage_change <= -alert.amount):
-                print('send mail to {} because price got down by {} %'.format(alert.user, alert.amount))
+                message = 'Hello {}, this is to notify you that {} price got down by {} %'.format(alert.user, alert.currency.name, alert.amount))
+                send_mail(subject, message, from_email, [alert.user.email, fail_silently=True])
             
             if (alert.direction == 'UP' and percentage_change >= alert.amount):
-                print('send mail to {} because price got up by {} %'.format(alert.user, alert.amount))
+                message = 'Hello {}, this is to notify you that {} price got up by {} %'.format(alert.user, alert.currency.name, alert.amount))
+                send_mail(subject, message, from_email, [alert.user.email, fail_silently=True])
             
