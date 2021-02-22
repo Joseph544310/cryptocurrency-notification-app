@@ -3,3 +3,7 @@
     right: 5px;
     cursor: pointer;
 }
+
+.trash:hover {
+    transform: scale(1.5);
+}

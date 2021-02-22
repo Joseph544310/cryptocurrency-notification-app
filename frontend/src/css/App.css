@@ -7,3 +7,9 @@
   cursor: pointer;
   margin: 10px;
 }
+
+.Header {
+  background-color: rgba(255, 255, 255, 0.7);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(136, 38, 38);
+}
