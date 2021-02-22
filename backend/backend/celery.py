@@ -13,9 +13,9 @@ app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'every-60-seconds': {
+    'every-1-day': {
         'task': 'api.tasks.send_notifications',
-        'schedule': 60.0,
+        'schedule': 86400,
     },
 }
 app.conf.timezone = 'UTC'
