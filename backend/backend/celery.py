@@ -10,8 +10,15 @@ app = Celery('backend')
 # Using a string here means the worker will not have to
 # pickle the object when using Windows.
 app.config_from_object('django.conf:settings')
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.autodiscover_tasks()
 
+app.conf.beat_schedule = {
+    'every-60-seconds': {
+        'task': 'api.tasks.send_notifications',
+        'schedule': 60.0,
+    },
+}
+app.conf.timezone = 'UTC'
 
 @app.task(bind=True)
 def debug_task(self):

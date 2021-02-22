@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
-    # 'django_celery_beat'
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -144,7 +144,7 @@ CORS_EXPOSE_HEADERS = ['Content-Type']
 CORS_ALLOW_CREDENTIALS = True
 
 # API KEY
-X_CoinAPI_Key = os.environ.get('X_CoinAPI_Key')
+X_COINAPI_KEY = os.environ.get('X_COINAPI_KEY')
 
 # MAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -161,3 +161,4 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/London'
+
